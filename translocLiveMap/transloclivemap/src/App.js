@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Maps from './components/Maps';
+import GoogleMaps from './components/GoogleMaps';
 
 class App extends Component {
+
   render() {
     return (
-      <Maps/>
+      <GoogleMaps/>
     );
   }
 }
