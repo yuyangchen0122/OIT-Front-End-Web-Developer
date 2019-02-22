@@ -9,8 +9,12 @@ import {
     Polyline
 } from "react-google-maps";
 import axios from 'axios';
+import busIcon from '../images/bus-marker.png';
+import stopIcon from '../images/bus-stop-marker.png';
+
 
 const decodePolyline = require('decode-google-map-polyline');
+const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
 var listOfDecodedSegments = new Array();
 var listOfSegmentsByIndex = new Array();
@@ -27,6 +31,7 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
                         key={marker.stop_id}
                         onClick={onClick}
                         position={{ lat: parseFloat(marker.location.lat), lng: parseFloat(marker.location.lng) }}
+                        icon={stopIcon}
                     >
                         {props.selectedMarker === marker &&
                         <InfoWindow>
@@ -41,16 +46,22 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
             })}
 
             {props.buses.map(bus => {
+                const onMarkerClick = props.onClick.bind(this, bus);
                 return (
                     <Marker
                         key={bus.vehicle_id}
                         position={{ lat: parseFloat(bus.location.lat), lng: parseFloat(bus.location.lng)}}
-                        icon={
-                            {
-                                url: './bus-marker.png'
-                            }
-                        }
+                        icon={busIcon}
+                        onClick={onMarkerClick}
                     >
+                        {props.selectedMarker === bus &&
+                        <InfoWindow>
+                            <div>
+                                <p>Bus Route: {bus.route_id}</p>
+                                <p>Speed: {bus.speed}</p>
+                            </div>
+                        </InfoWindow>}
+                        }
                     </Marker>
                 )
             })}
@@ -186,12 +197,16 @@ export default class Map extends Component {
                     });
                     console.log(this.state.vehicles);
                 })
-        },2000)
+        },200)
     }
 
     handleClick = (marker, event) => {
         console.log({ marker });
         this.setState({ selectedMarker: marker })
+    };
+
+    handleMarkerClick = (bus, event) => {
+        this.setState({selectedMarker: bus})
     };
 
 
@@ -205,6 +220,7 @@ export default class Map extends Component {
                 buses={this.state.vehicles}
                 segmentArrayLength = {segmentArrayLength}
                 onClick={this.handleClick}
+                onMarkerClick={this.handleMarkerClick}
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQFwKqgXTJM4b6oLQV9O3QiyiD6YxKP0o&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div style={{ height: `700px` }} />}
