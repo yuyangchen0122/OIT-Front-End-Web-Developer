@@ -19,6 +19,7 @@ const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/Mar
 var listOfDecodedSegments = new Array();
 var listOfSegmentsByIndex = new Array();
 var segmentArrayLength = [];
+var routeId;
 
 const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
 
@@ -33,10 +34,10 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
                         position={{ lat: parseFloat(marker.location.lat), lng: parseFloat(marker.location.lng) }}
                         icon={stopIcon}
                     >
-                        {props.selectedMarker === marker &&
+                        {props.selectedStopMarker === marker &&
                         <InfoWindow>
                             <div>
-                                {marker.name}
+                                <p>Bus stop: {marker.name}</p>
                             </div>
                         </InfoWindow>}
                         }
@@ -46,7 +47,8 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
             })}
 
             {props.buses.map(bus => {
-                const onMarkerClick = props.onClick.bind(this, bus);
+                const onMarkerClick = props.onMarkerClick.bind(this, bus);
+                // console.log('=========> ',segmentArrayLength[bus.route_id])
                 return (
                     <Marker
                         key={bus.vehicle_id}
@@ -54,32 +56,42 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
                         icon={busIcon}
                         onClick={onMarkerClick}
                     >
-                        {props.selectedMarker === bus &&
+                        {props.selectedBusMarker === bus &&
                         <InfoWindow>
                             <div>
                                 <p>Bus Route: {bus.route_id}</p>
                                 <p>Speed: {bus.speed}</p>
                             </div>
                         </InfoWindow>}
-                        }
+                        {props.polylineShown === bus &&
+                        <Polyline
+                            path={segmentArrayLength[bus.route_id]}
+                            options={{
+                                strokeColor: '#00ffff',
+                                strokeOpacity: 1,
+                                strokeWeight: 2,
+                            }}
+                        >
+                        </Polyline>}
+
                     </Marker>
                 )
             })}
 
-            {props.segmentArrayLength[4012660].map(polyline=> {
+            {/*{props.segmentArrayLength[4012632].map(polyline=> {*/}
 
-                return (
-                    <Polyline
-                        path={polyline}
-                        options={{
-                            strokeColor: '#00ffff',
-                            strokeOpacity: 1,
-                            strokeWeight: 2
-                        }}
-                        >
-                    </Polyline>
-                )
-            })}
+                {/*return (*/}
+                    {/*<Polyline*/}
+                        {/*path={polyline}*/}
+                        {/*options={{*/}
+                            {/*strokeColor: '#00ffff',*/}
+                            {/*strokeOpacity: 1,*/}
+                            {/*strokeWeight: 2*/}
+                        {/*}}*/}
+                        {/*>*/}
+                    {/*</Polyline>*/}
+                {/*)*/}
+            {/*})}*/}
 
 
         </GoogleMap>
@@ -95,7 +107,9 @@ export default class Map extends Component {
             busSegment: [],
             vehicles: [],
             routes: [],
-            selectedMarker: false,
+            selectedBusMarker: false,
+            selectedStopMarker: false,
+            polylineShown:false,
         }
     }
 
@@ -111,6 +125,7 @@ export default class Map extends Component {
         var listOfDecodedSegments = new Array();
         var listOfSegmentsByIndex = new Array();
         var segmentArrayLength = [];
+
 
         fetch('https://test-my.rutgers.edu/myr-widget-service/public/getVehicleByRoute?routeId')
             .then(r => r.json())
@@ -177,7 +192,7 @@ export default class Map extends Component {
                             }
 
                         }
-                        console.log(segmentArrayLength[4012628]);
+                        console.log(segmentArrayLength[4012630]);
 
 
 
@@ -188,25 +203,27 @@ export default class Map extends Component {
 
 
     getVechileLocation(){
-        setTimeout(() => {
+        setInterval(() => {
             axios.get("https://transloc-api-1-2.p.rapidapi.com/vehicles.json?agencies=1323", { headers: {'X-RapidAPI-Key': 'ri3d6FVEqPmshh2yOdwBPXY2GMIPp1ruryvjsnOzJpKAGBwCDY'} })
                 .then(res => {
                     var vehicles = res.data.data[1323];
+                    var routes = res.data.data[1323].route_id;
                     this.setState({
                         vehicles: vehicles
                     });
                     console.log(this.state.vehicles);
                 })
-        },200)
+        },2000)
     }
 
     handleClick = (marker, event) => {
         console.log({ marker });
-        this.setState({ selectedMarker: marker })
+        this.setState({ selectedStopMarker: marker })
     };
 
     handleMarkerClick = (bus, event) => {
-        this.setState({selectedMarker: bus})
+        this.setState({selectedBusMarker: bus, polylineShown: bus})
+        console.log(bus);
     };
 
 
@@ -214,9 +231,10 @@ export default class Map extends Component {
     render() {
         return (
             <MapWithAMarker
-                selectedMarker={this.state.selectedMarker}
+                selectedBusMarker={this.state.selectedBusMarker}
+                selectedStopMarker={this.state.selectedStopMarker}
+                polylineShown={this.state.polylineShown}
                 markers={this.state.busStops}
-                polylines={this.state.routes}
                 buses={this.state.vehicles}
                 segmentArrayLength = {segmentArrayLength}
                 onClick={this.handleClick}
