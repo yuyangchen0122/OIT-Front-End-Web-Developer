@@ -14,12 +14,10 @@ import stopIcon from '../images/bus-stop-marker.png';
 
 
 const decodePolyline = require('decode-google-map-polyline');
-const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
 var listOfDecodedSegments = new Array();
 var listOfSegmentsByIndex = new Array();
 var segmentArrayLength = [];
-var routeId;
 
 const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
 
@@ -61,6 +59,7 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
                             <div>
                                 <p>Bus Route: {bus.route_id}</p>
                                 <p>Speed: {bus.speed}</p>
+                                <p>Capacity: {bus.seating_capacity}</p>
                             </div>
                         </InfoWindow>}
                         {props.polylineShown === bus &&
@@ -207,7 +206,6 @@ export default class Map extends Component {
             axios.get("https://transloc-api-1-2.p.rapidapi.com/vehicles.json?agencies=1323", { headers: {'X-RapidAPI-Key': 'ri3d6FVEqPmshh2yOdwBPXY2GMIPp1ruryvjsnOzJpKAGBwCDY'} })
                 .then(res => {
                     var vehicles = res.data.data[1323];
-                    var routes = res.data.data[1323].route_id;
                     this.setState({
                         vehicles: vehicles
                     });
