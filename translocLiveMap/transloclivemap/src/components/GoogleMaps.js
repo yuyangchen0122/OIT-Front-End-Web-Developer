@@ -24,7 +24,7 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
     return (
         <GoogleMap defaultZoom={13} defaultCenter={{ lat: 40.5235, lng: -74.4556 }}>
             {props.markers.map(marker => {
-                const onClick = props.onClick.bind(this, marker)
+                const onClick = props.onClick.bind(this, marker);
                 return (
                     <Marker
                         key={marker.stop_id}
@@ -45,14 +45,14 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
             })}
 
             {props.buses.map(bus => {
-                const onMarkerClick = props.onMarkerClick.bind(this, bus);
-                // console.log('=========> ',segmentArrayLength[bus.route_id])
+                const onBusClick = props.onMarkerClick.bind(this, bus);
+                const path = props.segmentArrayLength[bus.route_id];
                 return (
                     <Marker
                         key={bus.vehicle_id}
                         position={{ lat: parseFloat(bus.location.lat), lng: parseFloat(bus.location.lng)}}
                         icon={busIcon}
-                        onClick={onMarkerClick}
+                        onClick={onBusClick}
                     >
                         {props.selectedBusMarker === bus &&
                         <InfoWindow>
@@ -62,35 +62,33 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
                                 <p>Capacity: {bus.seating_capacity}</p>
                             </div>
                         </InfoWindow>}
-                        {props.polylineShown === bus &&
-                        <Polyline
-                            path={segmentArrayLength[bus.route_id]}
-                            options={{
-                                strokeColor: '#00ffff',
-                                strokeOpacity: 1,
-                                strokeWeight: 2,
-                            }}
-                        >
-                        </Polyline>}
+                        {props.segmentArrayLength[bus.route_id].map(polyline=> {
+                            console.log(bus.route_id);
+                                return (
+                                    <Polyline
+                                        path={polyline}
+                                        options={{
+                                            strokeColor: 'red',
+                                            strokeOpacity: 1,
+                                            strokeWeight: 3
+                                        }}
+                                    >
+                                    </Polyline>
+                                )
+                            })}
+                        {/*<Polyline*/}
+                            {/*path={bus.route_id}*/}
+                            {/*options={{*/}
+                                {/*strokeColor: '#00ffff',*/}
+                                {/*strokeOpacity: 1,*/}
+                                {/*strokeWeight: 2,*/}
+                            {/*}}*/}
+                        {/*>*/}
+                        {/*</Polyline>}*/}
 
                     </Marker>
                 )
             })}
-
-            {/*{props.segmentArrayLength[4012632].map(polyline=> {*/}
-
-                {/*return (*/}
-                    {/*<Polyline*/}
-                        {/*path={polyline}*/}
-                        {/*options={{*/}
-                            {/*strokeColor: '#00ffff',*/}
-                            {/*strokeOpacity: 1,*/}
-                            {/*strokeWeight: 2*/}
-                        {/*}}*/}
-                        {/*>*/}
-                    {/*</Polyline>*/}
-                {/*)*/}
-            {/*})}*/}
 
 
         </GoogleMap>
@@ -118,6 +116,7 @@ export default class Map extends Component {
         this.getVechileLocation();
         this.getSegment();
     }
+
 
     getStopLocation(){
 
@@ -211,7 +210,7 @@ export default class Map extends Component {
                     });
                     console.log(this.state.vehicles);
                 })
-        },2000)
+        },5000)
     }
 
     handleClick = (marker, event) => {
@@ -220,7 +219,7 @@ export default class Map extends Component {
     };
 
     handleMarkerClick = (bus, event) => {
-        this.setState({selectedBusMarker: bus, polylineShown: bus})
+        this.setState({selectedBusMarker: bus})
         console.log(bus);
     };
 
@@ -231,7 +230,6 @@ export default class Map extends Component {
             <MapWithAMarker
                 selectedBusMarker={this.state.selectedBusMarker}
                 selectedStopMarker={this.state.selectedStopMarker}
-                polylineShown={this.state.polylineShown}
                 markers={this.state.busStops}
                 buses={this.state.vehicles}
                 segmentArrayLength = {segmentArrayLength}
