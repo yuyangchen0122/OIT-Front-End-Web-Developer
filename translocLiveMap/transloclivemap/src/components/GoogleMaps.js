@@ -46,7 +46,6 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
 
             {props.buses.map(bus => {
                 const onBusClick = props.onMarkerClick.bind(this, bus);
-                const path = props.segmentArrayLength[bus.route_id];
                 return (
                     <Marker
                         key={bus.vehicle_id}
@@ -59,7 +58,7 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
                             <div>
                                 <p>Bus Route: {bus.route_id}</p>
                                 <p>Speed: {bus.speed}</p>
-                                <p>Capacity: {bus.seating_capacity}</p>
+                                <p>Capacity: {bus.passenger_load*100 + "%"}</p>
                             </div>
                         </InfoWindow>}
                         {props.segmentArrayLength[bus.route_id].map(polyline=> {
@@ -96,7 +95,8 @@ const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => {
     )
 })
 
-export default class Map extends Component {
+export default class
+Map extends Component {
     constructor(props) {
         super(props)
         this.state = {
