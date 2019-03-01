@@ -71,15 +71,16 @@ class Grid extends React.Component {
             ItemComponent,
             itemProps: {
                 styles: {
-                    width: 'calc(100% - 2px)',
-                    height: 'calc(100% - 2px)',
+                    width: '100%',
+                    height: '100%',
                 },
             },
         };
 
-        const x = 3;
-        const y = 2;
+        const x = 6;
+        const y = 6;
         const items = [];
+        // Here total amount of cards is 6*6=36
 
         for (let iY = 0; iY < y; iY += 1) {
             const row = [];
@@ -91,8 +92,8 @@ class Grid extends React.Component {
 
                 newItem.key = key;
                 newItem.itemProps = { ...item.itemProps, name: key };
-                newItem.fixedWidth = item.fixedWidth + 20 * increment;
-                newItem.fixedHeight = item.fixedHeight + 20 * increment;
+                newItem.fixedWidth = item.fixedWidth;
+                newItem.fixedHeight = item.fixedHeight;
 
                 row.push(newItem);
             }
