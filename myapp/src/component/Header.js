@@ -10,9 +10,11 @@ import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
@@ -43,12 +45,23 @@ const styles = theme => ({
             display: 'none',
         },
     },
+    button: {
+        display: 'block',
+        marginTop: theme.spacing.unit * 2,
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 120,
+    },
 });
 
 class PrimaryAppBar extends React.Component {
     state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
+        campus: '',
+        campus_open: false,
+        role_open: false,
     };
 
     handleProfileMenuOpen = event => {
@@ -68,6 +81,30 @@ class PrimaryAppBar extends React.Component {
         this.setState({ mobileMoreAnchorEl: null });
     };
 
+    handleCampusChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleCampusClose = () => {
+        this.setState({ campus_open: false });
+    };
+
+    handleCampusOpen = () => {
+        this.setState({ campus_open: true });
+    };
+
+    handleRoleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleRoleClose = () => {
+        this.setState({ role_open: false });
+    };
+
+    handleRoleOpen = () => {
+        this.setState({ role_open: true });
+    };
+
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
         const { classes } = this.props;
@@ -85,6 +122,7 @@ class PrimaryAppBar extends React.Component {
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
             </Menu>
+
         );
 
         const renderMobileMenu = (
@@ -95,22 +133,23 @@ class PrimaryAppBar extends React.Component {
                 open={isMobileMenuOpen}
                 onClose={this.handleMenuClose}
             >
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <MailIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Messages</p>
-                </MenuItem>
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={11} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Notifications</p>
-                </MenuItem>
+                {/*<MenuItem onClick={this.handleMobileMenuOpen}>*/}
+                    {/*<IconButton color="inherit">*/}
+                        {/*<Badge badgeContent={4} color="secondary">*/}
+                            {/*<MailIcon />*/}
+                        {/*</Badge>*/}
+                    {/*</IconButton>*/}
+                    {/*<p>Messages</p>*/}
+                {/*</MenuItem>*/}
+                {/*<MenuItem onClick={this.handleMobileMenuOpen}>*/}
+                    {/*<IconButton color="inherit">*/}
+                        {/*<Badge badgeContent={11} color="secondary">*/}
+                            {/*<NotificationsIcon />*/}
+                        {/*</Badge>*/}
+                    {/*</IconButton>*/}
+                    {/*<p>Notifications</p>*/}
+                {/*</MenuItem>*/}
+
                 <MenuItem onClick={this.handleProfileMenuOpen}>
                     <IconButton color="inherit">
                         <AccountCircle />
@@ -132,16 +171,64 @@ class PrimaryAppBar extends React.Component {
                         </Typography>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={17} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton>
+
+                            {/*<IconButton color="inherit">*/}
+                                {/*<Badge badgeContent={4} color="secondary">*/}
+                                    {/*<MailIcon />*/}
+                                {/*</Badge>*/}
+                            {/*</IconButton>*/}
+                            {/*<IconButton color="inherit">*/}
+                                {/*<Badge badgeContent={17} color="secondary">*/}
+                                    {/*<NotificationsIcon />*/}
+                                {/*</Badge>*/}
+                            {/*</IconButton>*/}
+                            <form autoComplete="off">
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="demo-controlled-open-select">Campus</InputLabel>
+                                    <Select
+                                        open={this.state.campus_open}
+                                        onClose={this.handleCampusClose}
+                                        onOpen={this.handleCampusOpen}
+                                        value={this.state.campus}
+                                        onChange={this.handleCampusChange}
+                                        inputProps={{
+                                            name: "Campus",
+                                            id: "demo-controlled-open-select"
+                                        }}
+                                    >
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value={1}>New Brunswick</MenuItem>
+                                        <MenuItem value={2}>Newark</MenuItem>
+                                        <MenuItem value={3}>Camden</MenuItem>
+                                        <MenuItem value={4}>RBHS</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </form>
+                            <form autoComplete="off">
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="demo-controlled-role-open-select">Role</InputLabel>
+                                    <Select
+                                        open={this.state.role_open}
+                                        onClose={this.handleRoleClose}
+                                        onOpen={this.handleRoleOpen}
+                                        value={this.state.role}
+                                        onChange={this.handleRoleChange}
+                                        inputProps={{
+                                            name: "Role",
+                                            id: "demo-controlled-role-open-select"
+                                        }}
+                                    >
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem value={1}>Student</MenuItem>
+                                        <MenuItem value={2}>Faculty</MenuItem>
+                                        <MenuItem value={3}>Staff</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </form>
                             <IconButton
                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                 aria-haspopup="true"
