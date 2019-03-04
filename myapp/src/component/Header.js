@@ -16,9 +16,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
+
 const styles = theme => ({
     root: {
         width: '100%',
+        color: 'white',
     },
     grow: {
         flexGrow: 1,
@@ -61,6 +63,7 @@ class PrimaryAppBar extends React.Component {
         mobileMoreAnchorEl: null,
         campus: '',
         campus_open: false,
+        role: '',
         role_open: false,
     };
 
@@ -163,9 +166,6 @@ class PrimaryAppBar extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                            <MenuIcon />
-                        </IconButton>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             myApp
                         </Typography>
@@ -192,7 +192,7 @@ class PrimaryAppBar extends React.Component {
                                         value={this.state.campus}
                                         onChange={this.handleCampusChange}
                                         inputProps={{
-                                            name: "Campus",
+                                            name: "campus",
                                             id: "demo-controlled-open-select"
                                         }}
                                     >
@@ -216,7 +216,7 @@ class PrimaryAppBar extends React.Component {
                                         value={this.state.role}
                                         onChange={this.handleRoleChange}
                                         inputProps={{
-                                            name: "Role",
+                                            name: "role",
                                             id: "demo-controlled-role-open-select"
                                         }}
                                     >
@@ -237,10 +237,16 @@ class PrimaryAppBar extends React.Component {
                             >
                                 <AccountCircle />
                             </IconButton>
+                            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                                <MenuIcon />
+                            </IconButton>
                         </div>
                         <div className={classes.sectionMobile}>
                             <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
                                 <MoreIcon />
+                            </IconButton>
+                            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                                <MenuIcon />
                             </IconButton>
                         </div>
                     </Toolbar>
