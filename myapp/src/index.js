@@ -1,13 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PrimarySearchAppBar from './component/Header';
-import Grid from './component/AppLayout';
-import SearchBar from './component/SearchBar';
+import App from './App'
 
-ReactDOM.render(
-    <div>
-        <PrimarySearchAppBar />
-        <SearchBar/>
-        <Grid/>
-    </div>,document.querySelector('#root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
