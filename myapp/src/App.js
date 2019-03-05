@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PersistentDrawerLeft from './component/SearchBar';
+import SearchBar from './component/SearchBar';
 import PrimaryAppBar from './component/Header';
+import Grid from './component/AppLayout';
 
 
 class App extends Component {
@@ -8,7 +9,8 @@ class App extends Component {
     return (
         <div className="App">
           <PrimaryAppBar/>
-          <PersistentDrawerLeft/>
+          <SearchBar/>
+            <Grid/>
         </div>
     );
   }
