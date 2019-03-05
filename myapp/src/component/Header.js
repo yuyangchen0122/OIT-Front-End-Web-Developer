@@ -15,12 +15,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import red from '@material-ui/core/colors/red'
 
+const primary = red[500];
 
 const styles = theme => ({
     root: {
         width: '100%',
-        color: 'white',
+        color: red,
     },
     grow: {
         flexGrow: 1,
@@ -164,7 +166,7 @@ class PrimaryAppBar extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" color={'white'}>
                     <Toolbar>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             myApp

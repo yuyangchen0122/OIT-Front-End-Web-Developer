@@ -137,7 +137,7 @@ class SearchBar extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" color={'white'}>
                     <Toolbar>
                         <IconButton
                             className={classes.menuButton}
