@@ -9,8 +9,7 @@ class App extends Component {
     return (
         <div className="App">
           <PrimaryAppBar/>
-          <SearchBar/>
-            <Grid/>
+            <SearchBar/>
         </div>
     );
   }

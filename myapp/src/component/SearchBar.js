@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -108,19 +109,6 @@ class SearchBar extends React.Component {
         this.setState({ open: false });
     };
 
-    handleProfileMenuOpen = event => {
-        this.setState({ anchorEl: event.currentTarget });
-    };
-
-    handleMenuClose = () => {
-        this.setState({ anchorEl: null });
-        this.handleMobileMenuClose();
-    };
-
-    handleMobileMenuOpen = event => {
-        this.setState({ mobileMoreAnchorEl: event.currentTarget });
-    };
-
     handleMobileMenuClose = () => {
         this.setState({ mobileMoreAnchorEl: null });
     };
@@ -160,22 +148,23 @@ class SearchBar extends React.Component {
                             </div>
                             <Divider />
                             <List>
-                                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                                {['My Favorites', 'Academic Support', 'Campus Sevices', 'Classes & Degree', 'Computing Services', 'Financial Information', 'Grades & Records', 'Student Life'].map((text, index) => (
                                     <ListItem button key={text}>
-                                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                        <ListItemIcon>{index % 8 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                                         <ListItemText primary={text} />
                                     </ListItem>
                                 ))}
                             </List>
                             <Divider />
                             <List>
-                                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                                {['All mail', 'Trash', 'Spam'].map( (text, index) => (
                                     <ListItem button key={text}>
                                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                                         <ListItemText primary={text} />
                                     </ListItem>
                                 ))}
                             </List>
+
                         </Drawer>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
