@@ -19,7 +19,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import routes from '../routes/routes';
 
 
 
@@ -95,6 +96,17 @@ const styles = theme => ({
 });
 
 class SearchBar extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.activeRoute = this.activeRoute.bind(this);
+    }
+
+    activeRoute(routeName) {
+        return this.props.location.pathname.indexOf(routeName) > -1 ? true : false;
+    }
+
     state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
@@ -132,7 +144,7 @@ class SearchBar extends React.Component {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Drawer
+                        <Drawers
                             className={classes.drawer}
                             variant="persistent"
                             anchor="left"
@@ -165,7 +177,7 @@ class SearchBar extends React.Component {
                                 ))}
                             </List>
 
-                        </Drawer>
+                        </Drawers>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
