@@ -3,16 +3,16 @@ import PrimaryAppBar from '../component/Header';
 import Sidebar from '../component/SideBar';
 
 
-class HomePage extends Component {
+class ClassesDegree extends Component {
     render() {
         return (
             <div>
                 <PrimaryAppBar/>
                 <Sidebar/>
-                <h2>Hello</h2>
+                <h2>you</h2>
 
             </div>
         );
     }
 }
-export default HomePage;
+export default ClassesDegree;

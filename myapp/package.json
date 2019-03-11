@@ -7,10 +7,12 @@
     "@material-ui/icons": "^3.0.2",
     "fuse.js": "^3.4.2",
     "grid-draggable": "^3.3.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5",
-    "react-virtual-draggable-grid": "^0.7.6-alpha"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.8",
+    "react-virtual-draggable-grid": "^0.7.6-alpha",
+    "recompose": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
