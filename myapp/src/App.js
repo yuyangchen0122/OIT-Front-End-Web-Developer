@@ -7,29 +7,29 @@ import ComputingServices from './pages/ComputingServices';
 import FinancialInformation from './pages/FinancialInformation';
 import GradesRecords from './pages/GradesRecords';
 import StudentLife from './pages/StudentLife';
-import SideBar from './component/SideBar';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import PersistentDrawerLeft from './component/SideBar';
+import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 
 
 class App extends Component {
   render() {
     return (
         <BrowserRouter>
-            <SideBar>
+            <PersistentDrawerLeft>
                 <Switch>
-                  <Route component={HomePage}/>
-                  <Route component={MyFavorites} />
-                  <Route component={AcademicSupport} />
-                  <Route component={ClassesDegree} />
-                  <Route component={ComputingServices} />
-                  <Route component={FinancialInformation} />
-                  <Route component={GradesRecords} />
-                  <Route component={ComputingServices} />
-                  <Route component={StudentLife} />
+                  <Route exact path="HomePage" component={HomePage}/>
+                  <Route path="MyFavorites" component={MyFavorites} />
+                  <Route path="AcademicSupport" component={AcademicSupport} />
+                  <Route path="ClassesDegree" component={ClassesDegree} />
+                  <Route path="ComputingServices" component={ComputingServices} />
+                  <Route path="FinancialInformation" component={FinancialInformation} />
+                  <Route path="GradesRecords" component={GradesRecords} />
+                  <Route path="ComputingServices" component={ComputingServices} />
+                  <Route path="StudentLife" component={StudentLife} />
                 </Switch>
-            </SideBar>
+            </PersistentDrawerLeft>
         </BrowserRouter>
     );
   }
 }
-export default App;
+export default withRouter(App);

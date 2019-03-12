@@ -16,6 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import { Link, withRouter } from "react-router-dom";
 import { compose } from 'recompose';
+import ListItemText from "@material-ui/core/ListItemText";
 
 
 const drawerWidth = 240;
@@ -94,7 +95,7 @@ class PersistentDrawerLeft extends React.Component {
     };
 
     render() {
-        const { classes, theme, children, location: { pathname }}  = this.props;
+        const { classes, theme, children}  = this.props;
         const { open } = this.state;
 
         return (
@@ -136,26 +137,26 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem component={Link} to="../pages/HomePage" selected={'../pages/HomePage' === pathname}>
-                            HomePage
+                        <ListItem button component={Link} to="../pages/HomePage">
+                            <ListItemText primary="HomePage" />
                         </ListItem>
-                        <ListItem component={Link} to="../pages/AcademicSupport" selected={'../pages/AcademicSupport' === pathname}>
-                            Academic Support
+                        <ListItem button component={Link} to="../pages/AcademicSupport">
+                            <ListItemText primary="Academic Support" />
                         </ListItem>
-                        <ListItem component={Link} to="../pages/ClassesDegree" selected={'../pages/ClassesDegree' === pathname}>
-                            Classes & Degree
+                        <ListItem button component={Link} to="../pages/ClassesDegree">
+                            <ListItemText primary="Classes & Degree" />
                         </ListItem>
-                        <ListItem component={Link} to="../pages/ComputingServices" selected={'../pages/ComputingServices' === pathname}>
-                            Computing Services
+                        <ListItem button component={Link} to="../pages/ComputingServices">
+                            <ListItemText primary="Computing Services" />
                         </ListItem>
-                        <ListItem component={Link} to="../pages/FinancialInformation" selected={'../pages/FinancialInformation' === pathname}>
-                            Financial Information
+                        <ListItem button component={Link} to="../pages/FinancialInformation">
+                            <ListItemText primary="Financial Information" />
                         </ListItem>
-                        <ListItem component={Link} to="../pages/GradesRecords" selected={'../pages/GradesRecords' === pathname}>
-                            Grades & Records
+                        <ListItem button component={Link} to="../pages/GradesRecords">
+                            <ListItemText primary="Grades & Records" />
                         </ListItem>
-                        <ListItem component={Link} to="../pages/StudentLife" selected={'../pages/StudentLife' === pathname}>
-                            Student Life
+                        <ListItem button component={Link} to="../pages/StudentLife">
+                            <ListItemText primary="Student Life" />
                         </ListItem>
                         {/*{['My Favorites', 'Academic Support', 'Campus Sevices', 'Classes & Degree', 'Computing Services', 'Financial Information', 'Grades & Records', 'Student Life'].map((text, index) => (*/}
                             {/*<ListItem button component={Link}>*/}

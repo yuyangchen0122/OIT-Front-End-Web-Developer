@@ -10,7 +10,6 @@ class HomePage extends Component {
                 <PrimaryAppBar/>
                 <Sidebar/>
                 <h2>Hello</h2>
-
             </div>
         );
     }
