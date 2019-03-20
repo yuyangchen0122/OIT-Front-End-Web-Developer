@@ -117,7 +117,7 @@ class PersistentDrawerLeft extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" color="inherit" noWrap>
-                            Persistent drawer
+                            myRUTERS
                         </Typography>
                     </Toolbar>
                 </AppBar>
