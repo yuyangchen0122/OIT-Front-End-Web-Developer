@@ -80,8 +80,6 @@ const styles = theme => ({
 
 class PersistentDrawerLeft extends React.Component {
 
-    renderLink = itemProps => <Link to={this.props.to} {...itemProps} />;
-
     state = {
         open: false,
     };
@@ -137,7 +135,7 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button component={Link} to="../pages/HomePage">
+                        <ListItem button component={Link} to="/HomePage">
                             <ListItemText primary="HomePage" />
                         </ListItem>
                         <ListItem button component={Link} to="../pages/AcademicSupport">
